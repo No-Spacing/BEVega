@@ -15,9 +15,6 @@
 ## Login Credentials
  * Username: admin@email.com
  * password: Admin123
-## Pages
- * http://127.0.0.1:8000/login
- * http://127.0.0.1:8000/register
 ## Note
  you can set the value of `SESSION_LIFETIME` to 1 inside the `.env` file to check if the Remember_Me Token is working.
  
