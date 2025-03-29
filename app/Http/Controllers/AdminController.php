@@ -28,16 +28,20 @@ class AdminController extends Controller
 
     public function PostLogin (Request $request) {
 
-        $request->validate([
-            'username' => ['required'],
-            'password' => ['required']
-        ]);
+        if(Auth::guard('admin')->check()){
+            return redirect('dashboard');
+        }else{
+            $request->validate([
+                'username' => ['required'],
+                'password' => ['required']
+            ]);
 
-        if (Auth::guard('admin')->attempt(['username' => $request->username, 'password' => $request->password], $request->remember) ) {
-            $request->session()->regenerate();
-            return redirect()->intended('dashboard');
-        } else {
-            return back()->with('message','Invalid credentials');
+            if (Auth::guard('admin')->attempt(['username' => $request->username, 'password' => $request->password], $request->remember) ) {
+                $request->session()->regenerate();
+                return redirect()->intended('dashboard');
+            } else {
+                return back()->with('message','Invalid credentials');
+            }
         }
 
     }
