@@ -31,7 +31,7 @@ defineOptions({ layout: Layout })
             </v-container>
             <div class="d-flex justify-center">
                     <v-btn href="/videos/sunflower" class="mx-2">Sunflower</v-btn>
-                    <v-btn href="/videos/kaiKaiKitai" class="mx-2">KaiKai Kitai / Eve</v-btn>
+                    <v-btn href="/videos/kaiKaiKitai" class="mx-2">KaiKai Kitai</v-btn>
                     <v-btn href="/videos/everLastingShine" class="mx-2">Everlasting Shine</v-btn>
             </div>
         </v-card-text>
