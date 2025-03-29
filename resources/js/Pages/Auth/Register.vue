@@ -13,9 +13,6 @@ const form = useForm ({
     
 })
 
-function submit() {
-  form.post('/register-user')
-}
 </script>
 <template>
 <v-app>
@@ -27,7 +24,7 @@ function submit() {
                     <v-card-title>Register</v-card-title>
                     <v-card-subtitle>Register Form</v-card-subtitle>
 
-                        <v-form @submit.prevent="submit">
+                        <v-form @submit.prevent="form.post('/PostUser')">
                             <v-card-text>
 
                                 <v-text-field
