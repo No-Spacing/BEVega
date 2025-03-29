@@ -15,6 +15,4 @@
 ## Login Credentials
  * Username: admin@email.com
  * password: Admin123
-## Note
- you can set the value of `SESSION_LIFETIME` to 1 inside the `.env` file to check if the Remember_Me Token is working.
- 
+
