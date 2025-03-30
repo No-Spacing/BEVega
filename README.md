@@ -1,7 +1,7 @@
 # BEVega
  CRUD
 ## Installation
- 1. open command prompt inside the app project folder and type command `composer update`.
+ 1. open command prompt inside the BEVega project folder and type command `composer update`.
  2. rename the `.env.example` file to `.env`.
  3. inside the command prompt type `php artisan key:generate`.
  4. Website uses MYSQL. Please make sure MYSQL is installed to your device before running this commands 
