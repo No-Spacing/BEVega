@@ -16,6 +16,12 @@ const form = useForm({
     password: null,
     remember: false,
 })
+
+function submit() {
+    form.post('/PostLogin',{
+        replace: true,
+    })
+}
 </script>
 
 <template>
@@ -28,7 +34,7 @@ const form = useForm({
                     <v-card-title>Login</v-card-title>
                     <v-card-subtitle>Login Form</v-card-subtitle>
 
-                    <form @submit.prevent="form.post('/PostLogin')">
+                    <form @submit.prevent="submit">
                         <v-card-text>
                             <v-alert
                             v-if="$page.props.flash.message"
