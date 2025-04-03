@@ -1,8 +1,10 @@
 <script setup>
 import Layout from './Layout/Main.vue'
+import { Head } from '@inertiajs/vue3'
 defineOptions({ layout: Layout })
 </script>
 <template>
+    <Head title="Videos" />
     <v-card title="Videos" subtitle="Bonus objective">
         <v-card-text>
             <v-container fluid class="d-flex justify-center"> 

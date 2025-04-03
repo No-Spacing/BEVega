@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Role;
 
 
 class DatabaseSeeder extends Seeder
@@ -21,12 +22,10 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        DB::table('admins')->insert([
-            'username' => 'admin@email.com',
-            'password' => hash::make('Admin123'),
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        Role::create(['name' => 'user']);
+        Role::create(['name' => 'admin']);
+
+        User::create(['name' => 'Admin', 'email' => 'admin@email.com', 'password' => Hash::make('Admin123'), 'role_id' => '2']);
 
         $products = new Product();
         $products->name = 'Sunflower';

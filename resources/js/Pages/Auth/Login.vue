@@ -1,7 +1,7 @@
 <script setup>
 import { useForm, usePage } from '@inertiajs/vue3'
 
-import { Link } from '@inertiajs/vue3'
+import { Link, Head  } from '@inertiajs/vue3'
 import { reactive } from 'vue'
 
 const variables = reactive({
@@ -12,7 +12,7 @@ const page = usePage();
 
 const form = useForm({
     _token: page.props.csrf_token,
-    username: null,
+    email: null,
     password: null,
     remember: false,
 })
@@ -25,6 +25,7 @@ function submit() {
 </script>
 
 <template>
+<Head title="Login" />
 <v-app>
     <v-container class="fill-height">
         <v-row class="d-flex justify-center align-center fill-height" >
@@ -45,9 +46,9 @@ function submit() {
                             </v-alert>
 
                             <v-text-field
-                            v-model="form.username"
-                            :error-messages="form.errors.username"
-                            label="Username"
+                            v-model="form.email"
+                            :error-messages="form.errors.email"
+                            label="Email"
                             ></v-text-field>
 
                             <v-text-field

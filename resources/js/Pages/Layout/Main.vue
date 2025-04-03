@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch } from 'vue'
 import { useDisplay } from 'vuetify'
+import { router } from '@inertiajs/vue3'
 
 const { mobile } = useDisplay()
 
@@ -9,6 +10,13 @@ const drawer = ref(true), rail = ref(true)
 function navigationRail () {
     this.drawer = !this.drawer;
     this.rail = false;
+}
+
+function logout() {
+    router.visit('/logout',
+    {
+        replace: true,
+    })
 }
 </script>
 <template>
@@ -20,7 +28,7 @@ function navigationRail () {
         >
             <v-list>
                 <v-list-item prepend-icon="mdi-account-circle">
-                    {{ $page.props.admin.username }}
+                    {{ $page.props.user[0].name }}
                 </v-list-item>
             </v-list>
 
@@ -29,13 +37,13 @@ function navigationRail () {
             <v-list density="compact" nav>
                 <v-list-item href="/dashboard" prepend-icon="mdi-view-dashboard" title="Dashboard"></v-list-item>
                 <v-list-item href="/products" prepend-icon="mdi-alpha-p-box" title="Products"></v-list-item>
-                <v-list-item href="/create-product" prepend-icon="mdi-plus-box" title="Create"></v-list-item>
+                <v-list-item v-if="$page.props.user.can.create" href="/create-product" prepend-icon="mdi-plus-box" title="Create"></v-list-item>
                 <v-list-item href="/videos" prepend-icon="mdi-play-box" title="Videos"></v-list-item>
             </v-list>
 
             <template v-slot:append>
                 <v-list density="compact" nav>
-                    <v-list-item href="/logout" prepend-icon="mdi-logout" title="Logout"></v-list-item>
+                    <v-list-item @click.prevent="logout" prepend-icon="mdi-logout" title="Logout"></v-list-item>
                 </v-list>
             </template>
         </v-navigation-drawer>

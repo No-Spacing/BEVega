@@ -9,10 +9,15 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\Product;
 use App\Models\category;
+use App\Models\User;
+
+use App\Http\Requests\ProductRequest;
 
 use Illuminate\Support\Carbon;
 
 use Inertia\Inertia;
+
+use AuthorizesRequests;
 
 class AdminController extends Controller
 {
@@ -28,15 +33,15 @@ class AdminController extends Controller
 
     public function PostLogin (Request $request) {
 
-        if(Auth::guard('admin')->check()){
+        if(Auth::check()){
             return redirect('dashboard');
         }else{
             $request->validate([
-                'username' => ['required'],
+                'email' => ['required'],
                 'password' => ['required']
             ]);
 
-            if (Auth::guard('admin')->attempt(['username' => $request->username, 'password' => $request->password], $request->remember) ) {
+            if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->remember) ) {
                 $request->session()->regenerate();
                 return redirect()->intended('dashboard');
             } else {
@@ -49,14 +54,15 @@ class AdminController extends Controller
     public function RegisterUser (Request $request){
 
         $request->validate([
-            'username' => [ 'required', 'unique:admins', 'min:6' ],
-            'password' => [ 'required', 'confirmed', 'min:6' ]
+            'name' => ['required', 'min:6'],
+            'email' => [ 'required', 'unique:users', 'min:6', 'email' ],
+            'password' => [ 'required', 'confirmed', 'min:6' ],
         ]);
 
-        DB::table('admins')
-        ->insert([
-            'username' => $request->username,
-            'password' => hash::make($request->password),
+        User::create([
+            'name' => $request->name, 
+            'email' => $request->email, 
+            'password' => $request->password
         ]);
 
         return redirect('/login')->with('snackbar', true);
@@ -102,21 +108,24 @@ class AdminController extends Controller
                     'date' => 'required'
                 ]
             );
+            
             $products = new Product();
 
             $products->name = $request->name;
             $products->description = $request->description;
             $products->date = Carbon::parse($request->date)->addDay()->format('Y-m-d');
             $products->save();
-
+    
             $categories = new category();
-
+    
             $categories->product_id = $products->id;
             $categories->name = $request->category;
             $categories->save();
-
-            return redirect('/products')->with('snackbar', true);
+    
+            return redirect('/products')->with('snackbar', true); 
         }
+
+       
         
     }
 
@@ -160,7 +169,7 @@ class AdminController extends Controller
 
 
     public function logout (Request $request) {
-        Auth::guard('admin')->logout();
+        Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/login'); 

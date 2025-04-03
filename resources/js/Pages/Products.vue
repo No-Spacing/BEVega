@@ -1,6 +1,6 @@
 <script setup>
 import Layout from './Layout/Main.vue'
-import { useForm, router } from '@inertiajs/vue3'
+import { useForm, router, Head } from '@inertiajs/vue3'
 import { ref, watch } from 'vue'
 
 defineOptions({ layout: Layout })
@@ -90,6 +90,7 @@ watch(filter, (newFilter) => {
 })
 </script>
 <template>
+    <Head title="Products" />
     <v-snackbar
         v-model="snackbar"
         location="top"
@@ -113,7 +114,7 @@ watch(filter, (newFilter) => {
            <v-container fluid>
                 <v-card-text>
                     <div class="container">
-                        <v-btn color="success" href="/create-product" class="mb-5" prepend-icon="mdi-plus-circle">Create</v-btn>
+                        <v-btn v-if="$page.props.user.can.create" color="success" href="/create-product" class="mb-5" prepend-icon="mdi-plus-circle">Create</v-btn>
                         <v-row class="justify-space-between">
                             <v-col cols="12" md="5" sm="6">
                                 <v-text-field
@@ -148,10 +149,10 @@ watch(filter, (newFilter) => {
                         :items="products.data"
                         :filter-keys="['name','description']"
                         hide-default-footer>
-                        <template v-slot:item.action="{ item }">
-                            <v-row class="d-flex justify-space-between">
-                                <v-btn icon="mdi-pencil" @click="openDialog(item)" size="x-small"></v-btn> 
-                                <v-btn icon="mdi-trash-can-outline" @click="remove(item.id)" size="x-small"></v-btn>
+                        <template v-slot:item.action="{ item }" >
+                            <v-row class="d-flex">
+                                <v-btn v-if="$page.props.user.can.update" class="mx-2 px-2" icon="mdi-pencil" @click="openDialog(item)" size="x-small"></v-btn> 
+                                <v-btn v-if="$page.props.user.can.delete" class="mx-2 px-2" icon="mdi-trash-can-outline" @click="remove(item.id)" size="x-small"></v-btn>
                             </v-row>
                         </template>
                     </v-data-table>

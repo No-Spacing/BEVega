@@ -1,13 +1,14 @@
 <script setup>
 import { reactive } from 'vue'
-import { useForm, usePage } from '@inertiajs/vue3'
+import { useForm, usePage, Head } from '@inertiajs/vue3'
 import { Link } from '@inertiajs/vue3'
 
 const page = usePage();
 
 const form = useForm ({
     _token: page.props.csrf_token,
-    username: null,  
+    name: null,
+    email: null,  
     password: null,
     password_confirmation: null,
     
@@ -15,6 +16,7 @@ const form = useForm ({
 
 </script>
 <template>
+<Head title="Register" />
 <v-app>
     <v-container fluid class="fill-height">
         <v-row class="d-flex justify-center align-center" >
@@ -28,9 +30,15 @@ const form = useForm ({
                             <v-card-text>
 
                                 <v-text-field
-                                v-model="form.username"
-                                :error-messages="form.errors.username"
-                                label="Username"
+                                v-model="form.name"
+                                :error-messages="form.errors.name"
+                                label="Name"
+                                ></v-text-field>
+
+                                <v-text-field
+                                v-model="form.email"
+                                :error-messages="form.errors.email"
+                                label="Email"
                                 ></v-text-field>
 
                                 <v-text-field

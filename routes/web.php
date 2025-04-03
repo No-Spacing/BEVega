@@ -6,6 +6,10 @@ use Inertia\Inertia;
 
 use App\Http\Controllers\AdminController;
 
+use Illuminate\Support\Facades\Auth;
+
+use App\Models\Product;
+
 
 Route::get('/', function () {
     return redirect('/login');
@@ -21,7 +25,7 @@ Route::middleware(['admin'])->group(function () {
     
     Route::inertia('/register', 'Auth/Register')->name('/register');
 
-    Route::inertia('/create-product', 'CreateProduct');
+    Route::inertia('/create-product', 'CreateProduct')->can('create', Product::class);
 
     Route::inertia('/videos', 'Videos');
 
@@ -32,9 +36,9 @@ Route::middleware(['admin'])->group(function () {
 
         Route::post('/post-product','PostProduct');
 
-        Route::delete('/delete-product/{id}', 'DeleteProduct');
+        Route::delete('/delete-product/{id}', 'DeleteProduct')->can('delete', Product::class);
 
-        Route::put('/update-product', 'UpdateProduct');
+        Route::put('/update-product', 'UpdateProduct')->can('update', Product::class);
 
         Route::get('/videos/{title}', 'VideoPlayer');
 

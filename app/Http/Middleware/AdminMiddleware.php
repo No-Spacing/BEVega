@@ -16,11 +16,11 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(!Auth::guard('admin')->check() && ($request->path() != 'login' && $request->path() != 'register')){
+        if(!Auth::check() && ($request->path() != 'login' && $request->path() != 'register')){
             return redirect('/login')->with('message','User must be logged in.');
         }
 
-        if(Auth::guard('admin')->check() && ($request->path() == 'login' || $request->path() == 'register')){
+        if(Auth::check() && ($request->path() == 'login' || $request->path() == 'register')){
             return redirect('/dashboard');
         }
 

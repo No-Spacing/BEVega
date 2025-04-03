@@ -1,5 +1,6 @@
 <script setup>
 import Layout from './Layout/Main.vue'
+import { Head  } from '@inertiajs/vue3'
 defineOptions({ layout: Layout })
 defineProps({ products: Object })
 
@@ -115,6 +116,7 @@ const barChartOptions = {
 }
 </script>
 <template>
+    <Head title="Dashboard" />
     <v-container fluid>
         <v-card>  
             <v-container fluid>

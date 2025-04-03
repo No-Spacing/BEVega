@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\Product;
+
 class HandleInertiaRequests extends Middleware
 {
     /**
@@ -45,9 +47,19 @@ class HandleInertiaRequests extends Middleware
             'appName' => config('app.name'),
 
             // Lazily...
-            'admin' => [
-                'username' => Auth::guard('admin')->user()->username ?? '',
-            ]
+            'user' => function () {
+                $user = Auth::user();
+                return $user ? [
+                    [
+                        'name' => $user->name,
+                    ],
+                    'can' => [
+                        'create' => $user->can('create', Product::class),
+                        'update' => $user->can('update', Product::class),
+                        'delete' => $user->can('delete', Product::class),
+                    ]
+                ] : null;
+            }
         ]);
     }
 }
